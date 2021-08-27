@@ -67,7 +67,11 @@ then
 	msm server create ${SERVER_NAME}
 	msm ${SERVER_NAME} jar ${JARGROUP}
 	
-	
+	# Replace default settings in server.properties with your values
+	sed -i "s/max-players=*/$MAX_PLAYERS/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
+	sed -i "s/server-ip=*/$SERVER_IP/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
+	sed -i "s/level-name=*/$LEVEL_NAME/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
+	sed -i "s/white-list=*/$WHITE_LIST/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
 		
 else
 	echo "Here is no second data disk for Minecraft servers!"
