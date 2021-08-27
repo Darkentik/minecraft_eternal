@@ -5,9 +5,11 @@
 
 WORKDIR="/srv/storage/disk01/minecraft_servers"
 SED_WORKDIR="\/srv\/storage\/disk01\/minecraft_servers"
+
 SERVER_NAME=mcserver01-a
 SERVER_USER=minecraft
 JARGROUP=mceternal
+JAR_FILENAME=forge-1.12.2-14.23.5.2854-universal.jar
 
 MAX_PLAYERS="max-players=6"
 SERVER_IP="server-ip=192.168.20.3"
@@ -17,6 +19,16 @@ WHITE_LIST="white-list=true"
 if [ $(df -h | grep sdb1 | awk '{ print $1  }') == "/dev/sdb1" ]
 then
 	# Dependencies
+	# # Openjdk-8 for old Minecraft version 1.12.2 - eternal based on it
+	# # Install software source manager
+	apt-get install software-properties-common
+	# # Add mirror with openjdk-8-jdk
+	apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
+	apt-get update
+	# # Install openjdk 8
+	apt-get install openjdk-8-jdk
+
+	# # Helpertools
 	apt-get install screen rsync zip jq
 	
 	# Download example config file
@@ -66,12 +78,14 @@ then
 	# Create a new server, and tell it to use the latest of those Minecraft jars
 	msm server create ${SERVER_NAME}
 	msm ${SERVER_NAME} jar ${JARGROUP}
+	# Set the server jar file
+	msm ${SERVER_NAME} jar ${JAR_FILENAME} 
 	
 	# Replace default settings in server.properties with your values
-	sed -i "s/max-players=*/$MAX_PLAYERS/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
-	sed -i "s/server-ip=*/$SERVER_IP/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
-	sed -i "s/level-name=*/$LEVEL_NAME/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
-	sed -i "s/white-list=*/$WHITE_LIST/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
+	sed -i "s/max-players=.*/$MAX_PLAYERS/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
+	sed -i "s/server-ip=.*/$SERVER_IP/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
+	sed -i "s/level-name=.*/$LEVEL_NAME/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
+	sed -i "s/white-list=.*/$WHITE_LIST/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
 		
 else
 	echo "Here is no second data disk for Minecraft servers!"
