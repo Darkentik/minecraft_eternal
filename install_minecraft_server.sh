@@ -21,15 +21,15 @@ then
 	# Dependencies
 	# # Openjdk-8 for old Minecraft version 1.12.2 - eternal based on it
 	# # Install software source manager
-	apt-get install software-properties-common
+	apt-get install software-properties-common -y
 	# # Add mirror with openjdk-8-jdk
 	apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
 	apt-get update
 	# # Install openjdk 8
-	apt-get install openjdk-8-jdk
+	apt-get install openjdk-8-jdk -y
 
 	# # Helpertools
-	apt-get install screen rsync zip jq
+	apt-get install screen rsync zip jq -y
 	
 	# Download example config file
 	wget https://git.io/6eiCSg -O /etc/msm.conf
