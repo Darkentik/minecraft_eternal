@@ -9,7 +9,7 @@ SED_WORKDIR="\/srv\/storage\/disk01\/minecraft_servers"
 SERVER_NAME=mcserver01-a
 SERVER_USER=minecraft
 JARGROUP=mceternal
-JAR_FILENAME=forge-1.12.2-14.23.5.2854-universal.jar
+JAR_FILENAME=forge-1.12.2-14.23.5.2847-universal.jar
 
 MAX_PLAYERS="max-players=6"
 SERVER_IP="server-ip=192.168.20.3"
@@ -86,7 +86,9 @@ then
 	sed -i "s/server-ip=.*/$SERVER_IP/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
 	sed -i "s/level-name=.*/$LEVEL_NAME/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
 	sed -i "s/white-list=.*/$WHITE_LIST/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
-		
+	
+	# Agree the EULA
+	echo "eula=true" > eula.txt
 else
 	echo "Here is no second data disk for Minecraft servers!"
 fi
