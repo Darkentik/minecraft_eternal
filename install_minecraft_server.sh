@@ -88,7 +88,7 @@ then
 	sed -i "s/white-list=.*/$WHITE_LIST/g" ${WORKDIR}/servers/${SERVER_NAME}/server.properties
 	
 	# Agree the EULA
-	echo "eula=true" > eula.txt
+	echo "eula=true" > ${WORKDIR}/servers/${SERVER_NAME}/eula.txt
 else
 	echo "Here is no second data disk for Minecraft servers!"
 fi
